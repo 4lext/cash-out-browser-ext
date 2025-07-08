@@ -73,12 +73,12 @@
     "prepublishOnly": "bun run lint && bun run test && bun run build",
     "start": "bun run dist/index.js",
     "test": "bun test",
+    "test:build-and-serve": "bun run build && bun run test:serve",
     "test:coverage": "bun test --coverage",
     "test:e2e": "playwright test",
     "test:e2e:ui": "playwright test --ui",
     "test:parallel": "bun test --parallel",
     "test:serve": "bun run scripts/test-server.ts",
-    "test:build-and-serve": "bun run build && bun run test:serve",
     "test:watch": "bun test --watch",
     "typecheck": "tsc --noEmit"
   },
@@ -135,7 +135,6 @@
   },
   "publishConfig": {
     "access": "public",
-    "provenance": true,
     "registry": "https://registry.npmjs.org/"
   }
 }
