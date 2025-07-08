@@ -1,0 +1,141 @@
+{
+  "name": "cash-out",
+  "version": "0.1.0",
+  "private": false,
+  "description": "High-performance, secure HTML to Markdown converter for browsers, Node.js, and Web Workers",
+  "keywords": [
+    "html",
+    "markdown",
+    "converter",
+    "browser",
+    "node",
+    "commonmark",
+    "web-worker",
+    "service-worker"
+  ],
+  "homepage": "https://github.com/stevekinney/cash-out#readme",
+  "bugs": {
+    "url": "https://github.com/stevekinney/cash-out/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/stevekinney/cash-out.git"
+  },
+  "license": "MIT",
+  "author": "Steve Kinney",
+  "sideEffects": false,
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    },
+    "./browser": {
+      "types": "./dist/browser/index.d.ts",
+      "import": "./dist/browser.js",
+      "default": "./dist/browser.js"
+    },
+    "./server": {
+      "types": "./dist/server/index.d.ts",
+      "import": "./dist/server.js",
+      "default": "./dist/server.js"
+    },
+    "./types": {
+      "types": "./dist/types/index.d.ts"
+    },
+    "./package.json": "./package.json"
+  },
+  "main": "./dist/index.js",
+  "module": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE",
+    "CHANGELOG.md"
+  ],
+  "scripts": {
+    "prebuild": "bun run clean && bunx tsc -p tsconfig.build.json --noEmit",
+    "build": "bun run scripts/build.ts",
+    "postbuild": "bun run build:validate",
+    "build:analyze": "bun run build && bunx source-map-explorer dist/*.js",
+    "build:check": "bun run build && bunx publint && bunx attw --pack",
+    "build:size": "bun run build && bunx size-limit",
+    "build:validate": "node -e 'import(\"./dist/index.js\").then(() => console.log(\"✅ ESM import works\"))'",
+    "clean": "bun run scripts/clean.ts",
+    "dev": "bun --watch run src/index.ts",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "format:check": "prettier --check \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "prepare": "husky",
+    "prepublishOnly": "bun run lint && bun run test && bun run build",
+    "start": "bun run dist/index.js",
+    "test": "bun test",
+    "test:coverage": "bun test --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "test:parallel": "bun test --parallel",
+    "test:serve": "bun run scripts/test-server.ts",
+    "test:build-and-serve": "bun run build && bun run test:serve",
+    "test:watch": "bun test --watch",
+    "typecheck": "tsc --noEmit"
+  },
+  "lint-staged": {
+    "src/**/*.{js,ts,tsx,jsx,mjs,cjs}": [
+      "eslint --fix"
+    ],
+    "scripts/**/*.{js,ts,tsx,jsx,mjs,cjs}": [
+      "eslint --fix"
+    ],
+    "*.{json,md,css,scss}": [
+      "prettier --write"
+    ],
+    "package.json": [
+      "sort-package-json"
+    ]
+  },
+  "dependencies": {},
+  "devDependencies": {
+    "@arethetypeswrong/cli": "^0.15.3",
+    "@eslint/js": "^9.27.0",
+    "@ianvs/prettier-plugin-sort-imports": "^4.4.1",
+    "@playwright/test": "^1.53.2",
+    "@size-limit/preset-big-lib": "^11.1.4",
+    "@types/bun": "^1.2.13",
+    "@typescript-eslint/eslint-plugin": "^8.32.1",
+    "@typescript-eslint/parser": "^8.32.1",
+    "concurrently": "^9.2.0",
+    "eslint": "^9.27.0",
+    "eslint-config-prettier": "^10.1.5",
+    "eslint-import-resolver-typescript": "^4.3.5",
+    "eslint-plugin-eslint-comments": "^3.2.0",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-prettier": "^5.4.0",
+    "eslint-plugin-promise": "^7.2.1",
+    "eslint-plugin-security": "^3.0.1",
+    "eslint-plugin-unicorn": "^59.0.1",
+    "eslint-plugin-unused-imports": "^4.1.4",
+    "globals": "^16.1.0",
+    "happy-dom": "^18.0.1",
+    "husky": "^9.1.7",
+    "lint-staged": "^16.0.0",
+    "prettier": "^3.5.3",
+    "publint": "^0.2.7",
+    "size-limit": "^11.1.4",
+    "sort-package-json": "^3.2.1",
+    "source-map-explorer": "^2.5.3"
+  },
+  "peerDependencies": {},
+  "optionalDependencies": {},
+  "engines": {
+    "bun": ">=1.13.0",
+    "node": ">=18.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true,
+    "registry": "https://registry.npmjs.org/"
+  }
+}

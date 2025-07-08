@@ -1,0 +1,69 @@
+# Bun Configuration for html-to-markdown library
+# Documentation: https://bun.sh/docs/runtime/bunfig
+
+# Build configuration
+[build]
+# Target environment for builds
+target = "bun"
+# Output directory for builds
+outdir = "dist"
+# Entry point for builds
+entrypoint = "src/index.ts"
+# Minify output for production builds
+minify = true
+# Source maps for debugging
+sourcemap = "linked"
+
+# Bundler configuration
+[bundle]
+# Entry points for bundling
+entrypoints = ["src/index.ts"]
+# Output format (esm, cjs, etc.)
+format = "esm"
+# Disable code-splitting for library builds
+splitting = false
+# External dependencies to exclude from bundling
+external = []
+
+# Development bundle configuration - inherits from [bundle]
+[bundle.development]
+# Generate inline source maps for easier debugging
+sourcemap = "inline"
+# Skip minification for faster builds
+minify = false
+
+# Production bundle configuration - inherits from [bundle]
+[bundle.production]
+# Generate external source maps
+sourcemap = "external"
+# Enable all minification options with aggressive settings
+minify = { syntax = true, whitespace = true, identifiers = true }
+# Enable dead code elimination
+eliminate_dead_code = true
+# Tree shake unused exports
+tree_shaking = true
+
+# Runtime configuration
+[runtime]
+# Allow top-level await
+allowTopLevelAwait = true
+# Enable watch mode with file extensions to monitor
+watch = [".ts", ".tsx", ".js", ".jsx", ".json"]
+
+# Test configuration
+[test]
+# Run tests in parallel for better performance
+parallel = true
+# Set timeout for tests (in milliseconds)
+timeout = 30000
+# Enable coverage by default
+coverage = false
+# Coverage thresholds
+coverageThreshold = { lines = 80, functions = 80, branches = 80 }
+
+# Performance optimizations
+[install]
+# Use hardlinks when possible for faster installs
+linking = "hardlink"
+# Cache packages aggressively
+cache = true

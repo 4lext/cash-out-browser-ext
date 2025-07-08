@@ -1,0 +1,23 @@
+[
+  {
+    "name": "Browser Bundle",
+    "path": "dist/browser.js",
+    "limit": "5 KB",
+    "webpack": false,
+    "brotli": true
+  },
+  {
+    "name": "Server Bundle",
+    "path": "dist/server.js",
+    "limit": "30 KB",
+    "webpack": false,
+    "brotli": true
+  },
+  {
+    "name": "Universal Bundle",
+    "path": "dist/index.js",
+    "limit": "35 KB",
+    "webpack": false,
+    "brotli": true
+  }
+]

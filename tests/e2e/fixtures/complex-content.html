@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complex Content Test</title>
+</head>
+<body>
+    <h1>Complex HTML Content for Testing</h1>
+    
+    <h2>Nested Lists</h2>
+    <ul>
+        <li>Level 1 Item 1
+            <ul>
+                <li>Level 2 Item 1</li>
+                <li>Level 2 Item 2
+                    <ol>
+                        <li>Level 3 Ordered Item 1</li>
+                        <li>Level 3 Ordered Item 2</li>
+                    </ol>
+                </li>
+            </ul>
+        </li>
+        <li>Level 1 Item 2</li>
+    </ul>
+
+    <h2>Complex Table (>5 columns - should convert to list)</h2>
+    <table>
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Email</th>
+                <th>Department</th>
+                <th>Salary</th>
+                <th>Start Date</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td>001</td>
+                <td>John Doe</td>
+                <td>john@example.com</td>
+                <td>Engineering</td>
+                <td>$75,000</td>
+                <td>2023-01-15</td>
+                <td>Active</td>
+            </tr>
+            <tr>
+                <td>002</td>
+                <td>Jane Smith</td>
+                <td>jane@example.com</td>
+                <td>Marketing</td>
+                <td>$65,000</td>
+                <td>2023-03-01</td>
+                <td>Active</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <h2>Code Blocks</h2>
+    <pre><code>function example() {
+    console.log("This is a code block");
+    return "formatted code";
+}</code></pre>
+
+    <p>And some <code>inline code</code> in a paragraph.</p>
+
+    <h2>Links and Images</h2>
+    <p>Visit <a href="https://github.com/stevekinney/cash-out">the project repository</a> for more information.</p>
+    <p>Here's an image: <img src="https://via.placeholder.com/150" alt="Placeholder image" /></p>
+
+    <h2>Blockquotes</h2>
+    <blockquote>
+        <p>This is a blockquote with some important information.</p>
+        <p>It can contain multiple paragraphs.</p>
+    </blockquote>
+
+    <h2>Mixed Formatting</h2>
+    <p>This paragraph contains <strong>bold text</strong>, <em>italic text</em>, 
+    <strong><em>bold and italic</em></strong>, and even <del>strikethrough text</del>.</p>
+
+    <script type="module">
+        import { convertToMarkdown } from '/dist/browser.js';
+        
+        // Make convertToMarkdown available globally for tests
+        window.convertToMarkdown = convertToMarkdown;
+        
+        // Export the HTML content for testing (excluding script tags)
+        const content = document.body.cloneNode(true);
+        // Remove script tags
+        content.querySelectorAll('script').forEach(script => script.remove());
+        window.complexHTMLContent = content.innerHTML;
+    </script>
+</body>
+</html>

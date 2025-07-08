@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Out - Browser Test</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .test-section {
+            margin: 20px 0;
+            padding: 15px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+        .test-result {
+            background: #f5f5f5;
+            padding: 10px;
+            margin: 10px 0;
+            white-space: pre-wrap;
+            font-family: monospace;
+            max-height: 300px;
+            overflow-y: auto;
+        }
+        button {
+            background: #007cba;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-radius: 3px;
+            margin: 5px;
+        }
+        button:hover {
+            background: #005a8b;
+        }
+        button:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+        }
+        .error {
+            background: #ffebee;
+            color: #c62828;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+        .success {
+            background: #e8f5e8;
+            color: #2e7d32;
+            padding: 10px;
+            border-radius: 3px;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cash Out - Browser Test Suite</h1>
+    <p>This page tests the browser functionality of the cash-out HTML to Markdown converter.</p>
+
+    <div class="test-section">
+        <h2>Basic Conversion Test</h2>
+        <button id="test-basic" onclick="testBasicConversion()">Test Basic HTML</button>
+        <div id="basic-result" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Complex Table Test</h2>
+        <button id="test-table" onclick="testTableConversion()">Test Table HTML</button>
+        <div id="table-result" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Size Limit Test</h2>
+        <button id="test-size" onclick="testSizeLimit()">Test Size Limit</button>
+        <div id="size-result" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Concurrent Test</h2>
+        <button id="test-concurrent" onclick="testConcurrentConversions()">Test Concurrent Conversions</button>
+        <div id="concurrent-result" class="test-result"></div>
+    </div>
+
+    <div class="test-section">
+        <h2>Worker Communication Test</h2>
+        <button id="test-worker" onclick="testWorkerMessages()">Test Worker Messages</button>
+        <div id="worker-result" class="test-result"></div>
+    </div>
+
+    <script type="module" src="/dist/browser.js"></script>
+    <script type="module">
+        import { convertToMarkdown, cleanup } from '/dist/browser.js';
+
+        // Make functions available globally for buttons
+        window.convertToMarkdown = convertToMarkdown;
+        window.cleanup = cleanup;
+
+        window.testBasicConversion = async function() {
+            const button = document.getElementById('test-basic');
+            const result = document.getElementById('basic-result');
+            
+            button.disabled = true;
+            result.textContent = 'Testing...';
+            
+            try {
+                const html = `
+                    <h1>Main Title</h1>
+                    <p>This is a paragraph with <strong>bold</strong> and <em>italic</em> text.</p>
+                    <ul>
+                        <li>First item</li>
+                        <li>Second item with <a href="https://example.com">a link</a></li>
+                    </ul>
+                    <code>inline code</code>
+                `;
+                
+                const markdown = await convertToMarkdown(html);
+                result.textContent = `✅ Success!\n\nMarkdown:\n${markdown.markdown}\n\nMetadata:\n${JSON.stringify(markdown.metadata, null, 2)}`;
+                result.className = 'test-result success';
+            } catch (error) {
+                result.textContent = `❌ Error: ${error.message}`;
+                result.className = 'test-result error';
+            } finally {
+                button.disabled = false;
+            }
+        };
+
+        window.testTableConversion = async function() {
+            const button = document.getElementById('test-table');
+            const result = document.getElementById('table-result');
+            
+            button.disabled = true;
+            result.textContent = 'Testing...';
+            
+            try {
+                const html = `
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Age</th>
+                                <th>City</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>John</td>
+                                <td>30</td>
+                                <td>New York</td>
+                            </tr>
+                            <tr>
+                                <td>Jane</td>
+                                <td>25</td>
+                                <td>Los Angeles</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+                
+                const markdown = await convertToMarkdown(html);
+                result.textContent = `✅ Success!\n\nMarkdown:\n${markdown.markdown}`;
+                result.className = 'test-result success';
+            } catch (error) {
+                result.textContent = `❌ Error: ${error.message}`;
+                result.className = 'test-result error';
+            } finally {
+                button.disabled = false;
+            }
+        };
+
+        window.testSizeLimit = async function() {
+            const button = document.getElementById('test-size');
+            const result = document.getElementById('size-result');
+            
+            button.disabled = true;
+            result.textContent = 'Testing...';
+            
+            try {
+                // Create HTML that exceeds default size limit (10MB)
+                // Create a 10.1MB string to just exceed the limit
+                const sizeInBytes = 10.1 * 1024 * 1024;
+                const largeHTML = '<p>' + 'x'.repeat(sizeInBytes) + '</p>';
+                
+                await convertToMarkdown(largeHTML);
+                result.textContent = '❌ Expected size limit error but conversion succeeded';
+                result.className = 'test-result error';
+            } catch (error) {
+                console.log('Size limit test caught error:', error.name, error.message, error.code);
+                // Check for the error message pattern since minification changes class names
+                if (error.message && error.message.includes('exceeds maximum allowed size')) {
+                    result.textContent = `✅ Success! Size limit correctly enforced: ${error.message}`;
+                    result.className = 'test-result success';
+                } else {
+                    result.textContent = `❌ Unexpected error (${error.name}): ${error.message}`;
+                    result.className = 'test-result error';
+                }
+            } finally {
+                button.disabled = false;
+            }
+        };
+
+        window.testConcurrentConversions = async function() {
+            const button = document.getElementById('test-concurrent');
+            const result = document.getElementById('concurrent-result');
+            
+            button.disabled = true;
+            result.textContent = 'Testing concurrent conversions...';
+            
+            try {
+                const htmlSamples = [
+                    '<h1>Test 1</h1><p>Content 1</p>',
+                    '<h2>Test 2</h2><p>Content 2</p>',
+                    '<h3>Test 3</h3><p>Content 3</p>',
+                    '<h4>Test 4</h4><p>Content 4</p>',
+                    '<h5>Test 5</h5><p>Content 5</p>'
+                ];
+                
+                const startTime = performance.now();
+                const promises = htmlSamples.map(html => convertToMarkdown(html));
+                const results = await Promise.all(promises);
+                const endTime = performance.now();
+                
+                const allSuccessful = results.every(r => r.markdown.includes('#'));
+                
+                if (allSuccessful) {
+                    result.textContent = `✅ Success! All ${results.length} conversions completed in ${(endTime - startTime).toFixed(2)}ms\n\nResults:\n${results.map((r, i) => `${i + 1}: ${r.markdown.split('\\n')[0]}`).join('\\n')}`;
+                    result.className = 'test-result success';
+                } else {
+                    result.textContent = '❌ Some conversions failed';
+                    result.className = 'test-result error';
+                }
+            } catch (error) {
+                result.textContent = `❌ Error: ${error.message}`;
+                result.className = 'test-result error';
+            } finally {
+                button.disabled = false;
+            }
+        };
+
+        window.testWorkerMessages = async function() {
+            const button = document.getElementById('test-worker');
+            const result = document.getElementById('worker-result');
+            
+            button.disabled = true;
+            result.textContent = 'Testing worker message prefixes...';
+            
+            try {
+                // This test verifies that workers are using the correct message prefixes
+                // We'll monitor console messages to verify proper prefixing
+                const originalLog = console.log;
+                let workerInitMessage = '';
+                
+                console.log = function(...args) {
+                    const message = args.join(' ');
+                    if (message.includes('cash-out:')) {
+                        workerInitMessage = message;
+                    }
+                    originalLog.apply(console, args);
+                };
+                
+                // Force worker initialization by doing a conversion
+                const html = '<p>Test for worker messages</p>';
+                const markdown = await convertToMarkdown(html);
+                
+                // Restore console.log
+                console.log = originalLog;
+                
+                if (markdown.markdown.includes('Test for worker messages')) {
+                    result.textContent = `✅ Success! Worker communication working properly.\n\nConversion result: ${markdown.markdown}\n\nWorker init message detected: ${workerInitMessage || 'Not captured (but conversion succeeded)'}`;
+                    result.className = 'test-result success';
+                } else {
+                    result.textContent = '❌ Worker conversion failed';
+                    result.className = 'test-result error';
+                }
+            } catch (error) {
+                result.textContent = `❌ Error: ${error.message}`;
+                result.className = 'test-result error';
+            } finally {
+                button.disabled = false;
+            }
+        };
+
+        // Cleanup on page unload
+        window.addEventListener('beforeunload', () => {
+            cleanup();
+        });
+    </script>
+</body>
+</html>

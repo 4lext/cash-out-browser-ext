@@ -1,0 +1,38 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    // Override noEmit for build - only emit declarations
+    "noEmit": false,
+    "emitDeclarationOnly": true,
+    "declaration": true,
+    "declarationMap": true,
+    "outDir": "dist",
+    "rootDir": "src",
+    
+    // Remove settings that interfere with builds
+    "allowImportingTsExtensions": false,
+    "verbatimModuleSyntax": false,
+    
+    // Ensure proper module output
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "target": "ES2022",
+    
+    // Source maps
+    "sourceMap": true,
+    "inlineSources": true,
+    
+    // Strip internal types
+    "stripInternal": true,
+    
+    // Composite project for better performance
+    "composite": true
+  },
+  "include": ["src/**/*"],
+  "exclude": [
+    "src/**/*.test.ts", 
+    "src/**/*.test.tsx",
+    "src/test/**/*",
+    "**/*.bench.ts"
+  ]
+}

@@ -1,0 +1,60 @@
+# Source files
+src/
+scripts/
+
+# Test files
+*.test.ts
+*.test.js
+**/__tests__/
+**/test/
+coverage/
+
+# Development files
+.husky/
+.cursor/
+.github/
+.vscode/
+.idea/
+
+# Configuration files
+tsconfig.json
+tsconfig.build.json
+bunfig.toml
+bunfig.build.toml
+eslint.config.js
+.prettierrc*
+.editorconfig
+.gitignore
+.npmignore
+
+# Documentation source
+docs/
+examples/
+*.md
+!README.md
+!LICENSE
+!CHANGELOG.md
+
+# Build artifacts
+*.log
+*.tsbuildinfo
+.DS_Store
+node_modules/
+.cache/
+tmp/
+
+# Environment files
+.env
+.env.*
+
+# Bun specific
+bun.lockb
+bunfig.toml
+.bun/
+
+# Size limit
+.size-limit.json
+
+# Other
+.nvmrc
+.tool-versions

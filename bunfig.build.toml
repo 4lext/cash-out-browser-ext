@@ -1,0 +1,65 @@
+# Production Build Configuration for html-to-markdown
+
+# Build optimizations
+[build]
+target = "bun"
+format = "esm"
+splitting = false  # Disabled for library builds
+minify = true
+sourcemap = "external"
+
+# Minification settings
+[build.minify]
+syntax = true
+whitespace = true
+identifiers = true
+
+# Dead code elimination
+[build.deadCodeElimination]
+enabled = true
+# Tree shake unused exports
+treeShaking = true
+
+# Bundle settings
+[bundle]
+# Entry points handled by build script
+format = "esm"
+# External dependencies (none for this library)
+external = []
+
+# Optimization settings
+[optimization]
+# Inline small modules
+inlineThreshold = 100
+# Constant folding
+constantFolding = true
+# Remove console.log in production
+dropConsole = false  # Keep for logger
+# Remove debugger statements
+dropDebugger = true
+
+# Loader settings
+[loader]
+".ts" = "ts"
+".tsx" = "tsx"
+".js" = "js"
+".jsx" = "jsx"
+".json" = "json"
+
+# Define compile-time constants
+[define]
+"process.env.NODE_ENV" = '"production"'
+
+# Macro settings
+[macro]
+# Enable macros for compile-time optimizations
+enabled = true
+
+# Performance settings
+[performance]
+# Use multiple threads for building
+threads = "auto"
+# Cache build artifacts
+cache = true
+# Cache directory
+cacheDirectory = "node_modules/.cache/bun"
