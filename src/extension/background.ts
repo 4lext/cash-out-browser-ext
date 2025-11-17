@@ -3,6 +3,9 @@
  * Handles extension lifecycle and message passing
  */
 
+// Import the conversion library from CDN
+import { convertToMarkdown } from 'https://cdn.jsdelivr.net/npm/cash-out@latest/dist/browser.js';
+
 // Use browser namespace (works in both Chrome and Firefox with polyfill)
 const browser = globalThis.browser || globalThis.chrome;
 
@@ -75,10 +78,6 @@ async function handleConversion(
   message: ConversionMessage,
   sender: chrome.runtime.MessageSender
 ): Promise<string> {
-  // Import the browser converter
-  // Note: Dynamic imports work in service workers
-  const { convertToMarkdown } = await import('../browser/index.js');
-
   try {
     const markdown = await convertToMarkdown(message.html, {
       includeMetadata: message.options?.includeMetadata ?? true,

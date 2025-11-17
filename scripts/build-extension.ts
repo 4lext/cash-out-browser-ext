@@ -112,6 +112,8 @@ async function buildTypeScript(browser: Browser, outputDir: string): Promise<voi
       naming: {
         entry: config.output.replace(outputDir + '/', ''),
       },
+      // Mark CDN imports as external (don't bundle them)
+      external: ['https://cdn.jsdelivr.net/*'],
     });
 
     if (!result.success) {
@@ -120,45 +122,6 @@ async function buildTypeScript(browser: Browser, outputDir: string): Promise<voi
 
     console.log(`     ✓ ${config.name}`);
   }
-
-  // Also build the core library files that the extension will use
-  // Build browser converter
-  const browserResult = await Bun.build({
-    entrypoints: [join(rootDir, 'src/browser/index.ts')],
-    format: 'esm',
-    target: 'browser',
-    minify: true,
-    sourcemap: 'external',
-    splitting: false,
-    outdir: outputDir,
-    naming: {
-      entry: 'lib-browser.js',
-    },
-  });
-
-  if (!browserResult.success) {
-    throw new Error(`Failed to build browser library: ${browserResult.logs.join('\n')}`);
-  }
-
-  // Build worker
-  const workerResult = await Bun.build({
-    entrypoints: [join(rootDir, 'src/browser/worker.ts')],
-    format: 'esm',
-    target: 'browser',
-    minify: true,
-    sourcemap: 'external',
-    splitting: false,
-    outdir: outputDir,
-    naming: {
-      entry: 'worker.js',
-    },
-  });
-
-  if (!workerResult.success) {
-    throw new Error(`Failed to build worker: ${workerResult.logs.join('\n')}`);
-  }
-
-  console.log(`     ✓ Core Library Files`);
 }
 
 /**
