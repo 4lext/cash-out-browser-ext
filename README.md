@@ -2,6 +2,8 @@
 
 A high-performance, secure HTML to Markdown converter that runs entirely in the browser, Node.js, and Web Workers. Zero configuration required for excellent results, optimized for LLM consumption.
 
+**Also available as a browser extension!** Convert web pages to Markdown with a single click. [See Extension Documentation](#browser-extension)
+
 [![npm version](https://badge.fury.io/js/cash-out.svg)](https://badge.fury.io/js/cash-out)
 [![Bundle Size](https://img.shields.io/bundlephobia/minzip/cash-out)](https://bundlephobia.com/package/cash-out)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -295,6 +297,51 @@ bun run lint
 # Format code
 bun run format
 ```
+
+## Browser Extension
+
+Cash Out is also available as a browser extension for Chrome, Firefox, and Edge. Convert any webpage or selection to Markdown with a single click!
+
+### Features
+
+- 🔗 **One-Click Conversion**: Convert entire pages or selected text to Markdown
+- 📋 **Auto-Copy to Clipboard**: Converted Markdown is automatically copied
+- ⌨️ **Keyboard Shortcut**: Press `Ctrl+Shift+M` (or `Cmd+Shift+M` on Mac)
+- 🎯 **Context Menu**: Right-click to convert from anywhere
+- ⚙️ **Customizable**: Configure metadata, whitespace, and more
+- 🚀 **Fast & Secure**: Same high-performance converter as the library
+
+### Building the Extension
+
+```bash
+# Build for both Chrome and Firefox
+bun run build:extension
+
+# Build for specific browser
+bun run build:extension:chrome   # Chrome/Edge
+bun run build:extension:firefox  # Firefox
+```
+
+Output directories:
+- `dist/chrome/` - Chrome/Edge extension (ready to load)
+- `dist/firefox/` - Firefox extension (ready to load)
+
+### Loading the Extension
+
+**Chrome / Edge:**
+1. Navigate to `chrome://extensions` (or `edge://extensions`)
+2. Enable "Developer mode"
+3. Click "Load unpacked"
+4. Select the `dist/chrome` directory
+
+**Firefox:**
+1. Navigate to `about:debugging#/runtime/this-firefox`
+2. Click "Load Temporary Add-on..."
+3. Select `dist/firefox/manifest.json`
+
+### Extension Documentation
+
+For detailed extension documentation, see [src/extension/README.md](src/extension/README.md).
 
 ## Contributing
 
