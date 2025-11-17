@@ -1,0 +1,24 @@
+{
+  "manifest_version": 3,
+  "name": "Cash Out Markdown Copier",
+  "version": "0.1.0",
+  "description": "Convert any page to Markdown with cash-out and copy it to your clipboard.",
+  "permissions": ["contextMenus", "clipboardWrite"],
+  "host_permissions": ["<all_urls>"],
+  "web_accessible_resources": [
+    {
+      "resources": ["*.js", "*.js.map"],
+      "matches": ["<all_urls>"]
+    }
+  ],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "js": ["content-script.js"],
+      "run_at": "document_idle"
+    }
+  ]
+}
