@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Cash Out - HTML to Markdown</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>Cash Out</h1>
+        <p class="subtitle">HTML to Markdown Converter</p>
+      </header>
+
+      <main>
+        <div class="button-group">
+          <button id="convert-selection" class="btn btn-primary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+            </svg>
+            Convert Selection
+          </button>
+
+          <button id="convert-page" class="btn btn-secondary">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+            </svg>
+            Convert Entire Page
+          </button>
+        </div>
+
+        <div class="options">
+          <h2>Options</h2>
+
+          <label class="checkbox-label">
+            <input type="checkbox" id="include-metadata" checked />
+            <span>Include metadata</span>
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" id="preserve-whitespace" />
+            <span>Preserve whitespace</span>
+          </label>
+
+          <label class="checkbox-label">
+            <input type="checkbox" id="auto-convert" />
+            <span>Auto-convert on selection</span>
+          </label>
+        </div>
+
+        <div class="status" id="status"></div>
+      </main>
+
+      <footer>
+        <div class="footer-links">
+          <a href="#" id="options-link">Settings</a>
+          <a href="https://github.com/stevekinney/cash-out" target="_blank">GitHub</a>
+        </div>
+        <p class="version">v0.1.0</p>
+      </footer>
+    </div>
+
+    <script src="popup.js" type="module"></script>
+  </body>
+</html>

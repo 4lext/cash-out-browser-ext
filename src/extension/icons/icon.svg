@@ -1,0 +1,39 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Background gradient -->
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#667eea;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#764ba2;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Main circle background -->
+  <circle cx="64" cy="64" r="60" fill="url(#grad)"/>
+
+  <!-- Document icon -->
+  <g transform="translate(32, 28)">
+    <!-- Paper -->
+    <path d="M8 0 L48 0 L56 8 L56 72 L8 72 L8 0 Z" fill="white" opacity="0.95"/>
+
+    <!-- Folded corner -->
+    <path d="M48 0 L48 8 L56 8 Z" fill="white" opacity="0.7"/>
+
+    <!-- Markdown lines -->
+    <rect x="16" y="20" width="32" height="3" rx="1.5" fill="#667eea"/>
+    <rect x="16" y="28" width="24" height="3" rx="1.5" fill="#667eea"/>
+    <rect x="16" y="36" width="28" height="3" rx="1.5" fill="#667eea"/>
+
+    <!-- Hash symbol (Markdown) -->
+    <text x="16" y="54" font-family="monospace" font-size="16" font-weight="bold" fill="#764ba2">#</text>
+    <rect x="26" y="44" width="20" height="3" rx="1.5" fill="#764ba2"/>
+
+    <!-- More lines -->
+    <rect x="16" y="56" width="32" height="2" rx="1" fill="#667eea" opacity="0.6"/>
+    <rect x="16" y="60" width="28" height="2" rx="1" fill="#667eea" opacity="0.6"/>
+  </g>
+
+  <!-- Arrow indicating conversion -->
+  <g transform="translate(90, 56)">
+    <path d="M0 0 L12 6 L0 12 Z" fill="white" opacity="0.9"/>
+  </g>
+</svg>
