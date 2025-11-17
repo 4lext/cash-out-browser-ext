@@ -211,11 +211,11 @@ describe('Security functions', () => {
 
     it('throws on excessive nesting', () => {
       let html = '<div>';
-      for (let i = 0; i < 505; i++) {
+      for (let i = 0; i < 10005; i++) {
         html += '<div>';
       }
       html += 'Deep content';
-      for (let i = 0; i < 505; i++) {
+      for (let i = 0; i < 10005; i++) {
         html += '</div>';
       }
       html += '</div>';
@@ -226,13 +226,13 @@ describe('Security functions', () => {
     });
 
     it('handles nesting exactly at the limit', () => {
-      // Create exactly 500 levels of nesting
+      // Create exactly 10000 levels of nesting
       let html = '';
-      for (let i = 0; i < 500; i++) {
+      for (let i = 0; i < 10000; i++) {
         html += '<div>';
       }
       html += 'content';
-      for (let i = 0; i < 500; i++) {
+      for (let i = 0; i < 10000; i++) {
         html += '</div>';
       }
 
@@ -240,20 +240,20 @@ describe('Security functions', () => {
       expect(() => checkNestingDepth(doc.body as any)).not.toThrow();
     });
 
-    it('throws at exactly 501 levels', () => {
-      // Create exactly 501 levels of nesting (should fail)
+    it('throws at exactly 10001 levels', () => {
+      // Create exactly 10001 levels of nesting (should fail)
       let html = '';
-      for (let i = 0; i < 501; i++) {
+      for (let i = 0; i < 10001; i++) {
         html += '<div>';
       }
       html += 'content';
-      for (let i = 0; i < 501; i++) {
+      for (let i = 0; i < 10001; i++) {
         html += '</div>';
       }
 
       const doc = new DOMParser().parseFromString(`<body>${html}</body>`, 'text/html');
       expect(() => checkNestingDepth(doc.body as any)).toThrow(SecurityError);
-      expect(() => checkNestingDepth(doc.body as any)).toThrow('HTML nesting depth exceeds maximum of 500');
+      expect(() => checkNestingDepth(doc.body as any)).toThrow('HTML nesting depth exceeds maximum of 10000');
     });
 
     it('handles elements with no children', () => {
@@ -294,11 +294,11 @@ describe('Security functions', () => {
     it('provides correct depth tracking in error message', () => {
       // Create nesting that exceeds limit
       let html = '';
-      for (let i = 0; i < 505; i++) {
+      for (let i = 0; i < 10005; i++) {
         html += '<div>';
       }
       html += 'content';
-      for (let i = 0; i < 505; i++) {
+      for (let i = 0; i < 10005; i++) {
         html += '</div>';
       }
 
@@ -309,7 +309,7 @@ describe('Security functions', () => {
         expect(false).toBe(true); // Should not reach here
       } catch (error) {
         expect(error).toBeInstanceOf(SecurityError);
-        expect((error as any).message).toContain('500');
+        expect((error as any).message).toContain('10000');
         expect((error as any).code).toBe('SECURITY_VIOLATION');
         expect((error as any).threatType).toBe('EXCESSIVE_NESTING');
       }
@@ -319,11 +319,11 @@ describe('Security functions', () => {
       const doc = new DOMParser().parseFromString('<div><span>Test</span></div>', 'text/html');
       const element = doc.querySelector('div')!;
 
-      // Start at depth 499, should allow 1 more level
-      expect(() => checkNestingDepth(element as any, 499)).not.toThrow();
+      // Start at depth 9999, should allow 1 more level
+      expect(() => checkNestingDepth(element as any, 9999)).not.toThrow();
 
-      // Start at depth 500, should fail immediately on first child
-      expect(() => checkNestingDepth(element as any, 500)).toThrow(SecurityError);
+      // Start at depth 10000, should fail immediately on first child
+      expect(() => checkNestingDepth(element as any, 10000)).toThrow(SecurityError);
     });
   });
 

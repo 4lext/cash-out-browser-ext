@@ -18,8 +18,9 @@ const DANGEROUS_PROTOCOLS = new Set([
 ]);
 
 // Maximum nesting depth to prevent stack overflow
-// Increased from 100 to 500 to handle real-world deeply nested HTML structures
-const MAX_NESTING_DEPTH = 500;
+// Increased to 10000 to handle real-world deeply nested HTML structures
+// This is high enough for any legitimate page while still preventing infinite loops
+const MAX_NESTING_DEPTH = 10000;
 
 /**
  * Validate HTML input for security threats
