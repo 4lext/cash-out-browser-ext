@@ -80,13 +80,22 @@ The extension popup provides several options:
 
 ## Architecture
 
+### CDN-Based Architecture
+
+The extension uses the **published `cash-out` package from jsDelivr CDN** instead of bundling the converter library. This provides several benefits:
+
+- **Smaller bundle size**: ~32KB vs ~222KB (85% reduction)
+- **Automatic updates**: Gets latest bug fixes and features from the published package
+- **Tested code**: Uses the same version as the npm package
+- **Cleaner separation**: Extension code is separate from library code
+
 ### Source Structure
 
 ```
 src/extension/
 ├── manifest.chrome.json     # Chrome/Edge manifest (MV3)
 ├── manifest.firefox.json    # Firefox manifest (MV3 with Firefox-specific settings)
-├── background.ts           # Service worker (handles extension lifecycle)
+├── background.ts           # Service worker (imports from CDN)
 ├── content.ts              # Content script (runs on web pages)
 ├── popup/
 │   ├── popup.html         # Popup UI
@@ -103,12 +112,10 @@ src/extension/
 
 ```
 dist/
-├── chrome/                 # Chrome/Edge build
+├── chrome/                 # Chrome/Edge build (~32KB)
 │   ├── manifest.json
-│   ├── background.js       # Compiled background script
+│   ├── background.js       # Compiled background script (imports from CDN)
 │   ├── content.js          # Compiled content script
-│   ├── lib-browser.js      # Core conversion library
-│   ├── worker.js           # Web Worker for processing
 │   ├── popup/
 │   │   ├── popup.html
 │   │   ├── popup.css
@@ -119,6 +126,17 @@ dist/
 │       └── icon-128.png
 └── firefox/                # Firefox build (same structure)
 ```
+
+### CDN Import
+
+The background script imports the converter from jsDelivr:
+
+```typescript
+import { convertToMarkdown } from 'https://cdn.jsdelivr.net/npm/cash-out@latest/dist/browser.js';
+```
+
+**Permissions Required:**
+- `https://cdn.jsdelivr.net/*` - To load the cash-out library from CDN
 
 ## Chrome vs Firefox Differences
 

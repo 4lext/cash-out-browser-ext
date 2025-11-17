@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cash Out Extension - Test Page</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            max-width: 800px;
+            margin: 40px auto;
+            padding: 0 20px;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .test-section {
+            background: #f5f5f5;
+            border-left: 4px solid #667eea;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+
+        h1 {
+            color: #667eea;
+        }
+
+        h2 {
+            color: #764ba2;
+            margin-top: 30px;
+        }
+
+        code {
+            background: #e9ecef;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Courier New', monospace;
+        }
+
+        pre {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 15px;
+            border-radius: 5px;
+            overflow-x: auto;
+        }
+
+        .instructions {
+            background: #fff3cd;
+            border: 1px solid #ffc107;
+            padding: 15px;
+            border-radius: 5px;
+            margin: 20px 0;
+        }
+
+        ul {
+            margin: 10px 0;
+        }
+
+        li {
+            margin: 8px 0;
+        }
+
+        a {
+            color: #667eea;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        th, td {
+            border: 1px solid #ddd;
+            padding: 12px;
+            text-align: left;
+        }
+
+        th {
+            background: #667eea;
+            color: white;
+        }
+
+        tr:nth-child(even) {
+            background: #f9f9f9;
+        }
+    </style>
+</head>
+<body>
+    <h1>Cash Out Extension - Test Page</h1>
+
+    <div class="instructions">
+        <strong>🧪 How to test the extension:</strong>
+        <ol>
+            <li><strong>Convert Selection:</strong> Select any text below and press <code>Ctrl+Shift+M</code> (or <code>Cmd+Shift+M</code> on Mac)</li>
+            <li><strong>Context Menu:</strong> Right-click on selected text and choose "Convert to Markdown"</li>
+            <li><strong>Convert Page:</strong> Click the Cash Out extension icon and click "Convert Entire Page"</li>
+            <li><strong>Check Clipboard:</strong> After conversion, paste (<code>Ctrl+V</code>) to see the Markdown output</li>
+        </ol>
+    </div>
+
+    <h2>Rich Content Examples</h2>
+
+    <div class="test-section">
+        <h3>Formatted Text</h3>
+        <p>This paragraph contains <strong>bold text</strong>, <em>italic text</em>, and <code>inline code</code>.</p>
+        <p>You can also have <a href="https://example.com">hyperlinks</a> and text with <mark>highlighting</mark>.</p>
+    </div>
+
+    <div class="test-section">
+        <h3>Lists</h3>
+        <p>Unordered list:</p>
+        <ul>
+            <li>First item</li>
+            <li>Second item with <strong>formatting</strong></li>
+            <li>Third item</li>
+        </ul>
+
+        <p>Ordered list:</p>
+        <ol>
+            <li>Step one</li>
+            <li>Step two</li>
+            <li>Step three</li>
+        </ol>
+    </div>
+
+    <div class="test-section">
+        <h3>Code Block</h3>
+        <pre><code>// Example JavaScript code
+function convertToMarkdown(html) {
+  const result = await cashOut.convert(html);
+  return result.markdown;
+}</code></pre>
+    </div>
+
+    <div class="test-section">
+        <h3>Table</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Feature</th>
+                    <th>Chrome</th>
+                    <th>Firefox</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Manifest V3</td>
+                    <td>✅ Yes</td>
+                    <td>✅ Yes</td>
+                </tr>
+                <tr>
+                    <td>Service Worker</td>
+                    <td>✅ Yes</td>
+                    <td>⚠️ Background Script</td>
+                </tr>
+                <tr>
+                    <td>CDN Import</td>
+                    <td>✅ Yes</td>
+                    <td>✅ Yes</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <h2>Selection Test Areas</h2>
+
+    <div class="test-section">
+        <h3>Simple Paragraph</h3>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat.
+        </p>
+    </div>
+
+    <div class="test-section">
+        <h3>Complex Content</h3>
+        <p>This section contains multiple elements:</p>
+        <ul>
+            <li><strong>Bold item</strong> with regular text</li>
+            <li><em>Italic item</em> with a <a href="#link">link</a></li>
+            <li>Item with <code>code snippet</code> inside</li>
+        </ul>
+        <p>And a final paragraph to test multi-element selection.</p>
+    </div>
+
+    <h2>Troubleshooting</h2>
+
+    <div class="test-section">
+        <h3>Extension Not Working?</h3>
+        <ul>
+            <li><strong>Check Console:</strong> Open DevTools (F12) and check for errors</li>
+            <li><strong>Reload Extension:</strong> Go to <code>chrome://extensions</code> and click the reload icon</li>
+            <li><strong>Check Permissions:</strong> Make sure the extension has access to <code>cdn.jsdelivr.net</code></li>
+            <li><strong>Network Issues:</strong> Check if you can access <a href="https://cdn.jsdelivr.net/npm/cash-out@latest/dist/browser.js" target="_blank">the CDN directly</a></li>
+        </ul>
+    </div>
+
+    <div class="test-section">
+        <h3>Expected Behavior</h3>
+        <ul>
+            <li>✅ Notification appears in top-right corner after conversion</li>
+            <li>✅ Markdown is copied to clipboard automatically</li>
+            <li>✅ You can paste the Markdown immediately</li>
+            <li>✅ Context menu shows "Convert to Markdown" option</li>
+        </ul>
+    </div>
+
+    <footer style="margin-top: 60px; padding-top: 20px; border-top: 1px solid #ddd; text-align: center; color: #666;">
+        <p>Cash Out Extension Test Page | <a href="https://github.com/stevekinney/cash-out" target="_blank">GitHub</a></p>
+    </footer>
+</body>
+</html>
