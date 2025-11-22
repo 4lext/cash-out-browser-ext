@@ -75,9 +75,10 @@ async function handleConversion(
   message: ConversionMessage,
   sender: chrome.runtime.MessageSender
 ): Promise<string> {
-  // Import the browser converter
-  // Note: Dynamic imports work in service workers
-  const { convertToMarkdown } = await import('../browser/index.js');
+  // Import the browser converter from the cash-out npm package
+  // Note: Using direct path to avoid package name conflict (this repo is also named 'cash-out')
+  // Dynamic imports work in service workers
+  const { convertToMarkdown } = await import('../../node_modules/cash-out/dist/browser.js');
 
   try {
     const markdown = await convertToMarkdown(message.html, {

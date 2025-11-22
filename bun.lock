@@ -1,8 +1,12 @@
 {
   "lockfileVersion": 1,
+  "configVersion": 0,
   "workspaces": {
     "": {
       "name": "project-name",
+      "dependencies": {
+        "cash-out": "0.1.0",
+      },
       "devDependencies": {
         "@arethetypeswrong/cli": "^0.15.3",
         "@eslint/js": "^9.27.0",
@@ -329,6 +333,8 @@
     "callsites": ["callsites@3.1.0", "", {}, "sha512-P8BjAsXvZS+VIDUI11hHCQEv74YT67YUi5JJFNWIqL235sBmjX4+qx9Muvls5ivyNENctx46xQLQ3aTuE7ssaQ=="],
 
     "caniuse-lite": ["caniuse-lite@1.0.30001718", "", {}, "sha512-AflseV1ahcSunK53NfEs9gFWgOEmzr0f+kaMFA4xiLZlr9Hzt7HxcSpIFcnNCUkz6R6dWKa54rUz3HUmI3nVcw=="],
+
+    "cash-out": ["cash-out@0.1.0", "", {}, "sha512-HNKX4ANQTSxEnhBSJXu0vhdJMQ2Ty3KBz65DM5pniBKdaLnwROUE/eUa/7wrQfwyqRY641ipD0+DXKzk6QRQdA=="],
 
     "chalk": ["chalk@4.1.2", "", { "dependencies": { "ansi-styles": "^4.1.0", "supports-color": "^7.1.0" } }, "sha512-oKnbhFyRIXpUuez8iBMmyEa4nbj4IOQyuhc/wy9kY7/WVPcwIO9VA668Pu8RkO7+0G76SLROeyw9CpQ061i4mA=="],
 
