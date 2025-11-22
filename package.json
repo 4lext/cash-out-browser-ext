@@ -101,7 +101,9 @@
       "sort-package-json"
     ]
   },
-  "dependencies": {},
+  "dependencies": {
+    "cash-out": "0.1.0"
+  },
   "devDependencies": {
     "@arethetypeswrong/cli": "^0.15.3",
     "@eslint/js": "^9.27.0",

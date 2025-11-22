@@ -121,44 +121,21 @@ async function buildTypeScript(browser: Browser, outputDir: string): Promise<voi
     console.log(`     ✓ ${config.name}`);
   }
 
-  // Also build the core library files that the extension will use
-  // Build browser converter
-  const browserResult = await Bun.build({
-    entrypoints: [join(rootDir, 'src/browser/index.ts')],
-    format: 'esm',
-    target: 'browser',
-    minify: true,
-    sourcemap: 'external',
-    splitting: false,
-    outdir: outputDir,
-    naming: {
-      entry: 'lib-browser.js',
-    },
-  });
+  // Note: Extension now uses the cash-out npm package from node_modules
+  // The package is bundled into background.js during the build process above
+  console.log(`     ✓ Using cash-out package from node_modules (bundled)`);
 
-  if (!browserResult.success) {
-    throw new Error(`Failed to build browser library: ${browserResult.logs.join('\n')}`);
+  // Copy the worker.js file from the cash-out package
+  const workerSource = join(rootDir, 'node_modules/cash-out/dist/worker.js');
+  const workerDest = join(outputDir, 'worker.js');
+
+  if (existsSync(workerSource)) {
+    const workerContent = await Bun.file(workerSource).text();
+    await Bun.write(workerDest, workerContent);
+    console.log(`     ✓ Worker file (from cash-out package)`);
+  } else {
+    console.warn(`     ⚠️  Warning: worker.js not found in cash-out package`);
   }
-
-  // Build worker
-  const workerResult = await Bun.build({
-    entrypoints: [join(rootDir, 'src/browser/worker.ts')],
-    format: 'esm',
-    target: 'browser',
-    minify: true,
-    sourcemap: 'external',
-    splitting: false,
-    outdir: outputDir,
-    naming: {
-      entry: 'worker.js',
-    },
-  });
-
-  if (!workerResult.success) {
-    throw new Error(`Failed to build worker: ${workerResult.logs.join('\n')}`);
-  }
-
-  console.log(`     ✓ Core Library Files`);
 }
 
 /**
